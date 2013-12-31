@@ -9,14 +9,20 @@ var safeModules = {};
   safeModules[i] = require('nae-' + i);
 });
 
+var injectModules = function (options) {
+  var $ = {};
+  for (var i in safeModules) {
+    $[i] = safeModules[i].create(options[i]);
+  }
+
+  return $;
+};
+
 var messageHandle = {};
-messageHandle.run = function () {
-  console.log(arguments);
-  return;
-  var sbx = new SandBox('', {
+messageHandle.run = function (options, sandbox) {
+  var sbx = new SandBox(options.approot, {
     'disableModules' : ['child_process', 'vm'],
-    'modules' : {
-    }
+    'modules' : injectModules(sandbox),
   });
   sbx.start();
 };

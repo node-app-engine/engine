@@ -36,13 +36,10 @@ exports.create = function (options) {
     options = options || {};
     options.appname = app;
 
-    var src = options.srcfile;
-    delete options.srcfile;
-
     sub.send({
       'type' : 'run',
       '_seq' : ++seq,
-      'data' : [src, options, configs],
+      'data' : [options, configs],
     });
 
     sub.on('message', function (msg) {
