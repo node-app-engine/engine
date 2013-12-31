@@ -1,0 +1,51 @@
+{
+  "name": "nae-engine",
+  "description": "The main engine for NAE",
+  "keywords": [ "app engine", "nae" ],
+  "version": "0.1.0",
+  "author": "Aleafs Zhang (zhangxc83@gmail.com)",
+  "homepage": "https://github.com/node-app-engine/engine",
+  "repository": { 
+    "type": "git",
+    "url": "git://github.com/node-app-engine/engine.git",
+    "web": "https://github.com/node-app-engine/engine"
+  },
+  "dependencies": {
+    "build4js" : "=0.1.4",
+    "configer" : "latest",
+    "filelog" : "=0.1.4",
+    "tcproxy" : "=0.0.4",
+    "pm" : "=2.2.1",
+    "os-ex" : ">=0.0.2",
+    "zkjs" : "=3.4.1",
+    "nae-sandbox" : "latest",
+    "nae-fs" : "latest",
+    "nae-net" : "latest"
+  },
+  "engines": {
+    "node": ">=0.10.21"
+  },
+  "devDependencies": {
+    "benchmark" : "*",
+    "should" : ">=0.6.3",
+    "mocha" : ">=1.0.3",
+    "mm"  : "*",
+    "blanket": "*",
+    "coveralls" : "*",
+    "travis-cov": "*",
+    "jshint" : "*",
+    "mocha-lcov-reporter": "*"
+  },
+  "scripts": {
+    "main"  : "index.js",
+    "test"  : "make test"
+  },
+  "config" : {
+    "blanket": {
+      "pattern": "//^((?!(node_modules|test)).)*$/"
+    },
+    "travis-cov": {
+      "threshold": 90
+    }
+  }
+}

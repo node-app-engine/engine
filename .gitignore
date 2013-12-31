@@ -1,0 +1,14 @@
+node_modules
+log
+tmp
+run
+etc
+bin
+*.log
+*.tmp
+*.swp
+*.properties
+*.md5
+*.cache
+coverage.html
+public/status.taobao
