@@ -12,14 +12,14 @@
   },
   "dependencies": {
     "build4js" : "=0.1.4",
-    "configer" : "latest",
+    "configer" : "=0.1.0",
     "filelog" : "=0.1.4",
     "tcproxy" : "=0.0.4",
-    "pm" : "=2.2.1",
+    "pm" : "=2.2.2",
     "os-ex" : ">=0.0.2",
     "zkjs" : "=3.4.1",
-    "nae-sandbox" : "latest",
-    "nae-fs" : "latest",
+    "nae-sandbox" : "=0.0.1",
+    "nae-fs" : "=0.0.1",
     "nae-net" : ">=0.0.3",
     "nae-process" : ">=0.0.1"
   },
