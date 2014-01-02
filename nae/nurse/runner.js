@@ -28,7 +28,7 @@ messageHandle.run = function (options, sandbox) {
   var sbx = new SandBox(options.approot, {
     'disableModules' : ['child_process', 'vm'],
     'modules' : injectModules(safeModules, sandbox),
-    //'globals' : injectModules(safeGlobals, sandbox),
+    'globals' : injectModules(safeGlobals, sandbox),
   });
   sbx.start();
 };
