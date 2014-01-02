@@ -9,10 +9,15 @@ var safeModules = {};
   safeModules[i] = require('nae-' + i);
 });
 
-var injectModules = function (options) {
+var safeGlobals = {};
+['process'].forEach(function (i) {
+  safeGlobals[i] = require('nae-' + i);
+});
+
+var injectModules = function (modules, options) {
   var $ = {};
-  for (var i in safeModules) {
-    $[i] = safeModules[i].create(options[i]);
+  for (var i in modules) {
+    $[i] = modules[i].create(options[i]);
   }
 
   return $;
@@ -22,7 +27,8 @@ var messageHandle = {};
 messageHandle.run = function (options, sandbox) {
   var sbx = new SandBox(options.approot, {
     'disableModules' : ['child_process', 'vm'],
-    'modules' : injectModules(sandbox),
+    'modules' : injectModules(safeModules, sandbox),
+    'globals' : injectModules(safeGlobals, sandbox),
   });
   sbx.start();
 };
