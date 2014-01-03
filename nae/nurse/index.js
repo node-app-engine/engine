@@ -53,7 +53,7 @@ var objectReplace = function (src, pattern, map) {
 
   setInterval(function () {
     for (var i in APP) {
-      console.log(APP[i].rusage());
+      //console.log(APP[i].rusage());
     }
   }, 60000);
 
