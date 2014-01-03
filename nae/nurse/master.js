@@ -39,7 +39,7 @@ exports.create = function (options) {
 
   var seq = 0;
 
-  var que = fsqueue.instance(_options.fsqueue);
+  var que = fsqueue.instance(_options.fsqueue, true);
 
   var _me = {};
 
