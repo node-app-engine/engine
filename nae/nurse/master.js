@@ -60,8 +60,8 @@ exports.create = function (options) {
     });
 
     sub.on('exit', function (code, signal) {
-      sub = null;
       cleanDirSyncSilent(_me._fdpath, new RegExp('_' + sub.pid + '.sock$'));
+      sub = null;
     });
 
     options = options || {};
