@@ -54,10 +54,12 @@ proxy.whenProxyError(function (error, socket) {
 });
 
 proxy.setProxyHeader(function (client) {
+  return '';
   var s = JSON.stringify({
     'remoteAddress' : client.remoteAddress,
     'remotePort' : client.remotePort,
   });
+
   var b = new Buffer(10 + s.length);
   b.write('[NAE]:');
   b.writeUInt8(s.length, 6);
@@ -78,7 +80,6 @@ proxy.use(function (data, socket) {
     return;
   }
 
-  console.log(req);
   req.modifiedHeader = $.req;
 
   return req;
