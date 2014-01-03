@@ -18,10 +18,10 @@
     "pm" : "=2.2.2",
     "os-ex" : ">=0.0.2",
     "zkjs" : "=3.4.1",
-    "nae-sandbox" : "=0.0.3",
+    "nae-sandbox" : "git+https://github.com/node-app-engine/sandbox.git#remove_runInThisContext",
     "nae-fs" : "=0.0.2",
     "nae-net" : "=0.0.4",
-    "nae-process" : ">=0.0.1"
+    "nae-process" : ">=0.0.2"
   },
   "engines": {
     "node": ">=0.10.21"
