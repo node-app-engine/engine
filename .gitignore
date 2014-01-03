@@ -12,3 +12,4 @@ bin
 *.cache
 coverage.html
 public/status.taobao
+test/unit/data/fsqueue.*
