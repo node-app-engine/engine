@@ -74,7 +74,7 @@ exports.create = function (options) {
 
     sub.on('message', function (msg) {
       if ('event' === msg.type) {
-        que.push([app, JSON.stringify(msg.data)].join('\t'));
+        que.push([app, sub.pid, JSON.stringify(msg.data)].join('\t'));
       }
     });
   };
