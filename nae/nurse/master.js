@@ -53,12 +53,14 @@ exports.create = function (options) {
     fs.watch(_me._fdpath, {
       'persistent' : true
     }, function (evt, filename) {
-      console.log(evt);
       if ('rename' !== evt) {
         return;
       }
+
+      var p = filename.split('_').shift();
+      filename = path.join(_me._fdpath, filename);
       fs.exists(filename, function (yes) {
-        que.push([yes ? '+' : '-', app, filename].join('\t'));
+        que.push([yes ? '+' : '-', app, p, filename].join('\t'));
       });
     });
 
