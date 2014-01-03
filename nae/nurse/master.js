@@ -2,11 +2,32 @@
 
 "use strict";
 
+var fs = require('fs');
+var path = require('path');
 var child = require('child_process');
 var watch = require('os-ex');
+var mkdirp = require('mkdirp');
+
+var cleanDirSyncSilent = function (dir, pattern) {
+  try {
+    fs.readdirSync(dir).forEach(function (sub) {
+      if (!pattern.test(sub)) {
+        return;
+      }
+
+      try {
+        fs.unlinkSync(path.join(dir, sub));
+      } catch (ex) {
+      }
+    });
+  } catch (ex) {
+  }
+};
 
 exports.create = function (options) {
-  var _options = {};
+  var _options = {
+    'dirproc' : __dirname + '/../../run/proc',
+  };
   for (var i in options) {
     _options[i] = options[i];
   }
@@ -22,6 +43,15 @@ exports.create = function (options) {
       return;
     }
 
+    _me._fdpath = path.normalize(path.join(_options.dirproc, app, 'fd'));
+    mkdirp.sync(_me._fdpath);
+    fs.watch(_me._fdpath, {
+      'persistent' : true
+    }, function (evt, filename) {
+      // TODO: flush route.local
+      console.log(evt, filename);
+    });
+
     sub = child.fork(__dirname + '/runner.js', [app], {
     });
 
@@ -31,6 +61,7 @@ exports.create = function (options) {
 
     sub.on('exit', function (code, signal) {
       sub = null;
+      cleanDirSyncSilent(_me._fdpath, new RegExp('_' + sub.pid + '.sock$'));
     });
 
     options = options || {};
@@ -49,6 +80,10 @@ exports.create = function (options) {
   _me.stop = function (signal) {
     if (!sub) {
       return;
+    }
+
+    if (_me._fdpath) {
+      cleanDirSyncSilent(_me._fdpath, new RegExp('_' + sub.pid + '.sock$'));
     }
     sub.kill(signal || 'SIGTERM');
   };

@@ -7,17 +7,20 @@ var Master = require(__dirname + '/master.js');
 
 /* {{{ private function objectReplace() */
 var objectReplace = function (src, pattern, map) {
+  var res = {};
   for (var i in src) {
     if ('object' === (typeof src[i])) {
-      src[i] = objectReplace(src[i], pattern, map);
+      res[i] = objectReplace(src[i], pattern, map);
     } else if ('string' === (typeof src[i])) {
-      src[i] = src[i].replace(pattern, function (k, w) {
+      res[i] = src[i].replace(pattern, function (k, w) {
         return map[w] || k;
       });
+    } else {
+      res[i] = src[i];
     }
   }
 
-  return src;
+  return res;
 };
 /* }}} */
 
