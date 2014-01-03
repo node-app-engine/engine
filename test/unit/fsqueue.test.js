@@ -11,24 +11,23 @@ describe('fsqueue interface', function () {
 
   it('should_basic_queue_works_fine', function (done) {
 
-    var prx = __dirname + '/data/fsqueue';
-    var _me = fsqueue.instance(prx, false);
-    _me.push(['+', 'a', 'bc '].join('\t'));
-    _me.push([' -', 'a', 'b'].join('\t'));
+    var _me = fsqueue.instance(__dirname + '/data/fsqueue', false);
+    _me.write(['+', 'a', 'bc '].join('\t'));
+    _me.write([' -', 'a', 'b'].join('\t'));
 
     _me.rotate();
     _me.once('finish', function () {
-      fs.readFile(prx + '.0', 'utf8', function (err, data) {
+      fs.readFile(_me._getLastFileName(), 'utf8', function (err, data) {
         data.should.eql(['+\ta\tbc', '-\ta\tb', ''].join('\n'));
 
         _me.once('finish', function () {
-          fs.readFile(prx + '.1', 'utf8', function (err, data) {
+          fs.readFile(_me._getLastFileName(), 'utf8', function (err, data) {
             data.should.eql('another file\n');
             done();
           });
         });
 
-        _me.push('another file');
+        _me.write('another file');
         _me.rotate();
       });
     });

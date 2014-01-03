@@ -78,6 +78,7 @@ proxy.use(function (data, socket) {
     return;
   }
 
+  console.log(req);
   req.modifiedHeader = $.req;
 
   return req;
