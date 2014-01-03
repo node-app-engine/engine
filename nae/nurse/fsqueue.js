@@ -56,10 +56,9 @@ var Queue = function (filename, append) {
       return;
     }
 
-    _fd.end(function () {
-      _fd = null;
-      _fn = next();
-    });
+    _fn = next();
+    _fd.end();
+    _fd = null;
   };
 };
 util.inherits(Queue, Emitter);

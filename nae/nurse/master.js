@@ -8,6 +8,8 @@ var child = require('child_process');
 var watch = require('os-ex');
 var mkdirp = require('mkdirp');
 
+var fsqueue = require(__dirname + '/fsqueue.js');
+
 var cleanDirSyncSilent = function (dir, pattern) {
   try {
     fs.readdirSync(dir).forEach(function (sub) {
@@ -27,6 +29,7 @@ var cleanDirSyncSilent = function (dir, pattern) {
 exports.create = function (options) {
   var _options = {
     'dirproc' : __dirname + '/../../run/proc',
+    'fsqueue' : __dirname + '/../../run/route.local',
   };
   for (var i in options) {
     _options[i] = options[i];
@@ -35,6 +38,8 @@ exports.create = function (options) {
   var sub = null;
 
   var seq = 0;
+
+  var que = fsqueue.instance(_options.fsqueue);
 
   var _me = {};
 
@@ -48,8 +53,13 @@ exports.create = function (options) {
     fs.watch(_me._fdpath, {
       'persistent' : true
     }, function (evt, filename) {
-      // TODO: flush route.local
-      console.log(evt, filename);
+      console.log(evt);
+      if ('rename' !== evt) {
+        return;
+      }
+      fs.exists(filename, function (yes) {
+        que.push([yes ? '+' : '-', app, filename].join('\t'));
+      });
     });
 
     sub = child.fork(__dirname + '/runner.js', [app], {
