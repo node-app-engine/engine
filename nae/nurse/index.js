@@ -46,16 +46,10 @@ var objectReplace = function (src, pattern, map) {
 
     Object.keys(DEF).forEach(function (idx) {
       DEF[idx].appname = idx;
-      APP[idx] = Master.create();
+      APP[idx] = Master.create(_me.get('master'));
       APP[idx].start(idx, DEF[idx], objectReplace(sbx, /\{(.+?)\}/g, DEF[idx]));
     });
   };
-
-  setInterval(function () {
-    for (var i in APP) {
-      //console.log(APP[i].rusage());
-    }
-  }, 60000);
 
   cfg.on('reload', _Reload);
 
