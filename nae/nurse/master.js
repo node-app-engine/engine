@@ -74,7 +74,11 @@ exports.create = function (options) {
 
     sub.on('message', function (msg) {
       if ('event' === msg.type) {
-        que.push([app, sub.pid, JSON.stringify(msg.data)].join('\t'));
+        //que.write([app, sub.pid, JSON.stringify(msg.data)].join('\t'));
+        var arg = msg.data || {};
+        if ('listen' === arg.name && arg.file) {
+          que.write([app, '127.0.0.1', arg.file].join('\t'));
+        }
       }
     });
   };
