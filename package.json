@@ -20,7 +20,7 @@
     "zkjs" : "=3.4.1",
     "nae-sandbox" : "=0.0.2-alpha",
     "nae-fs" : "=0.0.2",
-    "nae-net" : "=0.0.4",
+    "nae-net" : "=0.0.5",
     "nae-process" : ">=0.0.2"
   },
   "engines": {
