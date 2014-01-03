@@ -50,6 +50,7 @@ exports.create = function (options) {
 
     _me._fdpath = path.normalize(path.join(_options.dirproc, app, 'fd'));
     mkdirp.sync(_me._fdpath);
+
     fs.watch(_me._fdpath, {
       'persistent' : true
     }, function (evt, filename) {
@@ -58,6 +59,10 @@ exports.create = function (options) {
       }
 
       var p = filename.split('_').shift();
+      if (!Number(p)) {
+        return;
+      }
+
       filename = path.join(_me._fdpath, filename);
       fs.exists(filename, function (yes) {
         que.push([yes ? '+' : '-', app, p, filename].join('\t'));
