@@ -22,7 +22,7 @@
     "nae-sandbox" : "=0.0.2-alpha",
     "nae-fs" : "=0.0.2",
     "nae-net" : "=0.0.7",
-    "nae-process" : ">=0.0.2"
+    "nae-process" : ">=0.0.3"
   },
   "engines": {
     "node": ">=0.10.21"
