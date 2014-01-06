@@ -9,6 +9,7 @@ http.createServer(function (req, res) {
     'url' : req.url,
     'method' : req.method,
     'ipaddr' : [req.socket.remoteAddress, req.socket.remotePort].join(':'),
+    'env' : process.env,
   }));
 }).listen(0, function () {
   console.log('server listened at %d', this.address().port);
