@@ -6,7 +6,6 @@ var fs = require('fs');
 var path = require('path');
 var child = require('child_process');
 var watch = require('os-ex');
-var mkdirp = require('mkdirp');
 
 var fsqueue = require(__dirname + '/fsqueue.js');
 
@@ -48,9 +47,6 @@ exports.create = function (options) {
       return;
     }
 
-    _me._fdpath = path.normalize(path.join(_options.dirproc, app, 'fd'));
-    mkdirp.sync(_me._fdpath);
-
     sub = child.fork(__dirname + '/runner.js', [app], {
     });
 
@@ -59,7 +55,6 @@ exports.create = function (options) {
     });
 
     sub.on('exit', function (code, signal) {
-      cleanDirSyncSilent(_me._fdpath, new RegExp('_' + sub.pid + '.sock$'));
       sub = null;
     });
 
@@ -86,10 +81,6 @@ exports.create = function (options) {
   _me.stop = function (signal) {
     if (!sub) {
       return;
-    }
-
-    if (_me._fdpath) {
-      cleanDirSyncSilent(_me._fdpath, new RegExp('_' + sub.pid + '.sock$'));
     }
     sub.kill(signal || 'SIGTERM');
   };
