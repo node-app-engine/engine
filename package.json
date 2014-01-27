@@ -20,7 +20,7 @@
     "mkdirp" : "=0.3.5",
     "nae-sandbox" : "=0.0.2-alpha",
     "nae-fs" : "=0.0.2",
-    "nae-net" : "=0.1.0",
+    "nae-net" : "=0.1.1",
     "nae-process" : ">=0.0.3"
   },
   "engines": {
